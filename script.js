@@ -1,3 +1,4 @@
+// ===== MATRIX BACKGROUND =====
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -7,192 +8,122 @@ const letters = "01";
 const fontSize = 16;
 const columns = canvas.width / fontSize;
 const drops = [];
-
-for(let x = 0; x < columns; x++) drops[x] = 1;
+for (let x = 0; x < columns; x++) drops[x] = 1;
 
 function draw() {
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#0f0";
+    ctx.font = fontSize + "px monospace";
 
-  ctx.fillStyle = "#0f0"; // green matrix letters
-  ctx.font = fontSize + "px monospace";
-
-  for(let i = 0; i < drops.length; i++) {
-    const text = letters[Math.floor(Math.random() * letters.length)];
-    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-    drops[i]++;
-  }
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+    }
 }
 setInterval(draw, 50);
 
-console.log("Portfolio loaded successfully");
-
-document.querySelectorAll("nav a").forEach(link => {
-link.addEventListener("click", function(){
-console.log("Navigating...");
-});
-});
-window.addEventListener("load", () => {
-  document.querySelectorAll(".skill-fill").forEach((bar, i) => {
-    const percentages = ["90%", "85%"]; // change per skill
-    setTimeout(() => { bar.style.width = percentages[i]; }, 500);
-  });
-});
-const text = "Cybersecurity Enthusiast | Ethical Hacker | Founder of Kali Shields";
+// ===== TYPEWRITER =====
+const typewriterText = "Cybersecurity Enthusiast | Ethical Hacker | Founder of Kali Shields";
 let index = 0;
 function typeWriter() {
-  if(index < text.length){
-    document.getElementById("typewriter").innerHTML += text.charAt(index);
-    index++;
-    setTimeout(typeWriter, 100);
-  }
+    if (index < typewriterText.length) {
+        document.getElementById("typewriter").innerHTML += typewriterText.charAt(index);
+        index++;
+        setTimeout(typeWriter, 100);
+    }
 }
 window.addEventListener("load", typeWriter);
-document.getElementById("contactForm").addEventListener("submit", function(e){
-e.preventDefault();
 
-emailjs.sendForm(
-"service_bcsqhb2",
-"jh7exmk",
-this
-).then(function(){
-document.getElementById("formStatus").innerText = "✅ Message sent!";
-}, function(error){
-document.getElementById("formStatus").innerText = "❌ Failed to send.";
+// ===== SKILLS ANIMATION =====
+window.addEventListener("load", () => {
+    const percentages = ["90%", "85%"];
+    document.querySelectorAll(".skill-fill").forEach((bar, i) => {
+        setTimeout(() => { bar.style.width = percentages[i]; }, 500);
+    });
 });
 
-this.reset();
-});
-/* ===== Hacker Terminal ===== */
+// ===== EMAILJS CONTACT FORM =====
+const contactForm = document.getElementById("contactForm");
+if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        emailjs.sendForm("service_bcsqhb2", "jh7exmk", this)
+            .then(function () {
+                document.getElementById("formStatus").innerText = "✅ Message sent!";
+            }, function (error) {
+                document.getElementById("formStatus").innerText = "❌ Failed to send.";
+            });
+        this.reset();
+    });
+}
 
+// ===== HACKER TERMINAL =====
 const terminalInput = document.getElementById("terminal-command");
 const terminalOutput = document.getElementById("terminal-output");
 
-terminalInput.addEventListener("keydown", function(e){
+function runCommand(command) {
+    let response = "";
 
-if(e.key === "Enter"){
+    command = command.toLowerCase();
 
-const command = terminalInput.value.toLowerCase();
+    if (command === "help") {
+        response = "commands: help, whoami, skills, projects, contact, scan, demo, clear";
+    } else if (command === "whoami") {
+        response = "Delight Mokaya - Ethical Hacker | Founder of Kali Shields";
+    } else if (command === "skills") {
+        response = "Python | Penetration Testing | OSINT | Kali Linux | Web Security";
+    } else if (command === "projects") {
+        response = "HackTheBox Labs, OSINT Research, Kali Shields";
+    } else if (command === "contact") {
+        response = "Email: marydelight72@gmail.com";
+    } else if (command === "clear") {
+        terminalOutput.innerHTML = "";
+        return;
+    } else if (command === "scan") {
+        terminalOutput.innerHTML += `<div>> scan target.com</div>`;
+        terminalOutput.innerHTML += `<div>Starting Nmap 7.94...</div>`;
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>Scanning target.com (192.168.1.1)</div>`;},1000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>PORT     STATE SERVICE</div>`;},2000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>22/tcp   open  ssh</div>`;},3000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>80/tcp   open  http</div>`;},3500);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>443/tcp  open  https</div>`;},4000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>Scan completed successfully.</div>`;},4500);
+        return;
+    } else if (command === "demo") {
+        terminalOutput.innerHTML += `<div>> demo</div>`;
+        terminalOutput.innerHTML += `<div>Launching penetration test simulation...</div>`;
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>$ nmap -sV target.com</div>`;},1000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>PORT     STATE SERVICE VERSION</div>`;},2000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>22/tcp   open  ssh     OpenSSH 8.2</div>`;},2500);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>80/tcp   open  http    Apache 2.4</div>`;},3000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>$ hydra -l admin -P passwords.txt ssh://target.com</div>`;},4000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>[22][ssh] login: admin password: admin123</div>`;},5000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>$ sqlmap -u target.com/login.php --dbs</div>`;},6000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>Database: users</div>`;},7000);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>Database: credentials</div>`;},7500);
+        setTimeout(()=>{terminalOutput.innerHTML += `<div>Simulation complete ✔</div>`;},8500);
+        return;
+    } else {
+        response = "command not found. type 'help'";
+    }
 
-let response = "";
-
-if(command === "help"){
-
-response = `
-Available commands:<br>
-whoami<br>
-skills<br>
-projects<br>
-contact<br>
-scan<br>
-demo<br>
-clear
-`;
-
+    terminalOutput.innerHTML += `<div>> ${command}</div>`;
+    terminalOutput.innerHTML += `<div>${response}</div>`;
 }
 
-else if(command === "demo"){
-
-terminalOutput.innerHTML += `<div>> demo</div>`;
-terminalOutput.innerHTML += `<div>Launching penetration test simulation...</div>`;
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>$ nmap -sV target.com</div>`;
-},1000);
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>PORT     STATE SERVICE VERSION</div>`;
-},2000);
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>22/tcp   open  ssh     OpenSSH 8.2</div>`;
-},2500);
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>80/tcp   open  http    Apache 2.4</div>`;
-},3000);
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>$ hydra -l admin -P passwords.txt ssh://target.com</div>`;
-},4000);
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>[22][ssh] login: admin password: admin123</div>`;
-},5000);
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>$ sqlmap -u target.com/login.php --dbs</div>`;
-},6000);
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>Database: users</div>`;
-},7000);
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>Database: credentials</div>`;
-},7500);
-
-setTimeout(()=>{
-terminalOutput.innerHTML += `<div>Simulation complete ✔</div>`;
-},8500);
-
-terminalInput.value="";
-return;
-
+if (terminalInput) {
+    terminalInput.addEventListener("keydown", function(e){
+        if(e.key === "Enter"){
+            runCommand(terminalInput.value);
+            terminalInput.value = "";
+        }
+    });
 }
 
-else if(command === "whoami"){
-
-response = "Delight Mokaya - Ethical Hacker and Founder of Kali Shields";
-
-}
-
-else if(command === "skills"){
-
-response = "Python | Penetration Testing | OSINT | Kali Linux | Web Security";
-
-}
-
-else if(command === "projects"){
-
-response = "HackTheBox Labs, OSINT Investigations, Cybersecurity Portfolio";
-
-}
-
-else if(command === "contact"){
-
-response = "Email: marydelight72@gmail.com";
-
-}
-
-else if(command === "clear"){
-
-terminalOutput.innerHTML = "";
-terminalInput.value = "";
-return;
-
-}
-
-else{
-
-response = "command not found. type 'help'";
-
-}
-
-terminalOutput.innerHTML += `<div>> ${command}</div>`;
-terminalOutput.innerHTML += `<div>${response}</div>`;
-
-terminalInput.value = "";
-
-}
-
-});
-
+// Optional: auto-run demo on page load
 window.addEventListener("load", () => {
-
-setTimeout(()=>{
-runCommand("demo");
-},2000);
-
+    setTimeout(() => { runCommand("demo"); }, 2000);
 });
