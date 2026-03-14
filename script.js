@@ -49,3 +49,18 @@ function typeWriter() {
   }
 }
 window.addEventListener("load", typeWriter);
+document.getElementById("contactForm").addEventListener("submit", function(e){
+e.preventDefault();
+
+emailjs.sendForm(
+"service_bcsqhb2",
+"jh7exmk",
+this
+).then(function(){
+document.getElementById("formStatus").innerText = "✅ Message sent!";
+}, function(error){
+document.getElementById("formStatus").innerText = "❌ Failed to send.";
+});
+
+this.reset();
+});
