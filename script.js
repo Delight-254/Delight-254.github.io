@@ -85,8 +85,60 @@ whoami<br>
 skills<br>
 projects<br>
 contact<br>
+scan<br>
+demo<br>
 clear
 `;
+
+}
+
+else if(command === "demo"){
+
+terminalOutput.innerHTML += `<div>> demo</div>`;
+terminalOutput.innerHTML += `<div>Launching penetration test simulation...</div>`;
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>$ nmap -sV target.com</div>`;
+},1000);
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>PORT     STATE SERVICE VERSION</div>`;
+},2000);
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>22/tcp   open  ssh     OpenSSH 8.2</div>`;
+},2500);
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>80/tcp   open  http    Apache 2.4</div>`;
+},3000);
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>$ hydra -l admin -P passwords.txt ssh://target.com</div>`;
+},4000);
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>[22][ssh] login: admin password: admin123</div>`;
+},5000);
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>$ sqlmap -u target.com/login.php --dbs</div>`;
+},6000);
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>Database: users</div>`;
+},7000);
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>Database: credentials</div>`;
+},7500);
+
+setTimeout(()=>{
+terminalOutput.innerHTML += `<div>Simulation complete ✔</div>`;
+},8500);
+
+terminalInput.value="";
+return;
 
 }
 
@@ -137,3 +189,10 @@ terminalInput.value = "";
 
 });
 
+window.addEventListener("load", () => {
+
+setTimeout(()=>{
+runCommand("demo");
+},2000);
+
+});
