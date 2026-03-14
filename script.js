@@ -64,3 +64,76 @@ document.getElementById("formStatus").innerText = "❌ Failed to send.";
 
 this.reset();
 });
+/* ===== Hacker Terminal ===== */
+
+const terminalInput = document.getElementById("terminal-command");
+const terminalOutput = document.getElementById("terminal-output");
+
+terminalInput.addEventListener("keydown", function(e){
+
+if(e.key === "Enter"){
+
+const command = terminalInput.value.toLowerCase();
+
+let response = "";
+
+if(command === "help"){
+
+response = `
+Available commands:<br>
+whoami<br>
+skills<br>
+projects<br>
+contact<br>
+clear
+`;
+
+}
+
+else if(command === "whoami"){
+
+response = "Delight Mokaya - Ethical Hacker and Founder of Kali Shields";
+
+}
+
+else if(command === "skills"){
+
+response = "Python | Penetration Testing | OSINT | Kali Linux | Web Security";
+
+}
+
+else if(command === "projects"){
+
+response = "HackTheBox Labs, OSINT Investigations, Cybersecurity Portfolio";
+
+}
+
+else if(command === "contact"){
+
+response = "Email: marydelight72@gmail.com";
+
+}
+
+else if(command === "clear"){
+
+terminalOutput.innerHTML = "";
+terminalInput.value = "";
+return;
+
+}
+
+else{
+
+response = "command not found. type 'help'";
+
+}
+
+terminalOutput.innerHTML += `<div>> ${command}</div>`;
+terminalOutput.innerHTML += `<div>${response}</div>`;
+
+terminalInput.value = "";
+
+}
+
+});
+
