@@ -1,8 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Delight Mokaya | Cybersecurity Portfolio</title>
@@ -10,20 +10,12 @@
 </head>
 
 <body>
-  <div id="intro-screen">
-
-<div class="intro-terminal">
-
-<div id="intro-text"></div>
-
-</div>
-
-</div>
+<p id="typewriter"></p>
 <canvas id="matrix"></canvas>
 <div class="overlay"></div>
+
 <header>
 <h1>Delight Mokaya</h1>
-<p id="typewriter"></p>
 <p>Web and App design | Cybersecurity Enthusiast | Penetration Tester | Founder of Kali Shields</p>
 </header>
 
@@ -58,115 +50,75 @@ consulting brand called Kali Shields.
   <span>Penetration Testing</span>
   <div class="skill-bar"><div class="skill-fill" style="width: 0%"></div></div>
 </div>
-
-
 </section>
 
 <section id="experience">
 <h2>Experience</h2>
-
 <p><strong>Project Manager</strong> – Rafiki Peps</p>
 <p>Managing waste management initiatives and sustainability programs.</p>
-
 <p><strong>Volunteer</strong> – Red Cross Kenya</p>
 <p>Mentoring young mothers through the Women Entrepreneurship Program.</p>
-
 <p><strong>Travel Consultant</strong> – Asap Tickets</p>
 <p>Supported operations and helped international clients purchase airline tickets.</p>
 </section>
 
 <section id="projects">
-
 <h2>Projects</h2>
-
 <div class="project">
 <h3>HackTheBox Labs</h3>
-<p>
-Practicing penetration testing on vulnerable machines to develop
-real-world offensive security skills.
-</p>
+<p>Practicing penetration testing on vulnerable machines to develop real-world offensive security skills.</p>
 </div>
-
 <div class="project">
 <h3>OSINT Research</h3>
-<p>
-Using open-source intelligence tools to gather and analyze public
-information for investigations.
-</p>
+<p>Using open-source intelligence tools to gather and analyze public information for investigations.</p>
 </div>
-
 </section>
 
 <section id="business">
-
 <h2>Kali Shields</h2>
-
-<p>
-Kali Shields is a cybersecurity consulting initiative that provides
-penetration testing services for websites and applications.
-Our goal is to help organizations identify vulnerabilities and
-protect their digital infrastructure.
-</p>
-
+<p>Kali Shields is a cybersecurity consulting initiative that provides penetration testing services for websites and applications. Our goal is to help organizations identify vulnerabilities and protect their digital infrastructure.</p>
 </section>
 
 <section id="terminal">
-
 <h2>Cyber Terminal</h2>
-
 <div class="terminal">
-
 <div id="terminal-output"></div>
-
 <div class="terminal-input">
 <span>visitor@kali-shields:~$</span>
 <input id="terminal-command" type="text" placeholder="type help">
 </div>
-
 </div>
-
 </section>
 
 <section id="contact">
-
 <h2>Contact</h2>
-
 <form id="contactForm">
-
 <input type="text" name="name" placeholder="Your Name" required>
-
 <input type="email" name="email" placeholder="Your Email" required>
-
 <textarea name="message" placeholder="Your Message" required></textarea>
-
 <button type="submit">Send Message</button>
-
 <p id="formStatus"></p>
-
 </form>
 
 <p>Email: marydelight72@gmail.com</p>
 <p>GitHub: github.com/Delight-254</p>
 <p>Location: Kenya-Mombasa</p>
 <p>Phone number: +254 114440680</p>
-
 </section>
-
 
 <footer>
 <p>© 2026 Delight Mokaya | Kali Shields</p>
 </footer>
 
+<!-- ================== EmailJS ================== -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
 <script>
 (function(){
-emailjs.init({
-publicKey: "oF7gY_u1iFpdWwJOt"
-});
+  emailjs.init({ publicKey: "oF7gY_u1iFpdWwJOt" });
 })();
 </script>
 
+<!-- ================== Main JS ================== -->
 <script src="script.js"></script>
 
 </body>
