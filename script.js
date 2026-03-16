@@ -1,324 +1,379 @@
 /* =========================
-   MATRIX BACKGROUND
+INTRO HACKER BOOT SCREEN
 ========================= */
 
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+const introLines = [
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+"Initializing Kali Shields security interface...",
+"Loading security modules...",
+"Connecting to encrypted network...",
+"Establishing secure tunnel...",
+"Scanning system environment...",
+"",
+"$ nmap -sS localhost",
+"PORT   STATE SERVICE",
+"22     open  ssh",
+"80     open  http",
+"443    open  https",
+"",
+"Running vulnerability scan...",
+"[✔] Firewall active",
+"[✔] Intrusion detection active",
+"[✔] Encryption modules loaded",
+"",
+"Access granted.",
+"Welcome to Kali Shields.",
+"Launching portfolio interface..."
 
-const letters = "01";
-const fontSize = 16;
-const columns = canvas.width / fontSize;
+];
 
-const drops = [];
+let introIndex = 0;
 
-for (let x = 0; x < columns; x++) {
-  drops[x] = 1;
+function runIntro(){
+
+const introText = document.getElementById("intro-text");
+
+if(introIndex < introLines.length){
+
+introText.innerHTML += introLines[introIndex] + "\n";
+
+introIndex++;
+
+setTimeout(runIntro,400);
+
+}else{
+
+setTimeout(()=>{
+
+document.getElementById("intro-screen").style.display="none";
+
+},1500);
+
 }
 
-function drawMatrix() {
-
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.fillStyle = "#00ff9c";
-  ctx.font = fontSize + "px monospace";
-
-  for (let i = 0; i < drops.length; i++) {
-
-    const text = letters[Math.floor(Math.random() * letters.length)];
-
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-      drops[i] = 0;
-    }
-
-    drops[i]++;
-  }
 }
 
-setInterval(drawMatrix, 50);
+window.addEventListener("load",runIntro);
 
 
 
 /* =========================
-   HEADER TYPEWRITER
+MATRIX BACKGROUND
 ========================= */
 
-const text = "Cybersecurity Enthusiast | Ethical Hacker | Founder of Kali Shields";
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
 
-let index = 0;
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
 
-function typeWriter() {
+const letters="01";
+const fontSize=16;
+const columns=canvas.width/fontSize;
 
-  if (index < text.length) {
+const drops=[];
 
-    document.getElementById("typewriter").innerHTML += text.charAt(index);
+for(let i=0;i<columns;i++){
+drops[i]=1;
+}
 
-    index++;
+function drawMatrix(){
 
-    setTimeout(typeWriter, 100);
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  }
+ctx.fillStyle="#00ff9c";
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+const text=letters[Math.floor(Math.random()*letters.length)];
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+drops[i]=0;
+}
+
+drops[i]++;
 
 }
 
-window.addEventListener("load", typeWriter);
+}
+
+setInterval(drawMatrix,50);
 
 
 
 /* =========================
-   SKILL BAR ANIMATION
+TYPEWRITER
 ========================= */
 
-window.addEventListener("load", () => {
+const text="Cybersecurity Enthusiast | Ethical Hacker | Founder of Kali Shields";
 
-  const percentages = ["90%", "85%"];
+let index=0;
 
-  document.querySelectorAll(".skill-fill").forEach((bar, i) => {
+function typeWriter(){
 
-    setTimeout(() => {
+if(index<text.length){
 
-      bar.style.width = percentages[i];
+document.getElementById("typewriter").innerHTML+=text.charAt(index);
 
-    }, 500);
+index++;
 
-  });
+setTimeout(typeWriter,100);
+
+}
+
+}
+
+window.addEventListener("load",typeWriter);
+
+
+
+/* =========================
+SKILLS ANIMATION
+========================= */
+
+window.addEventListener("load",()=>{
+
+const percentages=["90%","85%"];
+
+document.querySelectorAll(".skill-fill").forEach((bar,i)=>{
+
+setTimeout(()=>{
+
+bar.style.width=percentages[i];
+
+},500);
+
+});
 
 });
 
 
 
 /* =========================
-   EMAILJS CONTACT FORM
+EMAILJS FORM
 ========================= */
 
-const contactForm = document.getElementById("contactForm");
+const contactForm=document.getElementById("contactForm");
 
-if (contactForm) {
+if(contactForm){
 
-  contactForm.addEventListener("submit", function (e) {
+contactForm.addEventListener("submit",function(e){
 
-    e.preventDefault();
+e.preventDefault();
 
-    emailjs.sendForm(
-      "service_bcsqhb2",
-      "jh7exmk",
-      this
-    ).then(function () {
+emailjs.sendForm(
+"service_bcsqhb2",
+"jh7exmk",
+this
+)
 
-      document.getElementById("formStatus").innerText = "✅ Message sent!";
+.then(function(){
 
-    }, function () {
+document.getElementById("formStatus").innerText="Message sent successfully";
 
-      document.getElementById("formStatus").innerText = "❌ Failed to send.";
+},function(){
 
-    });
-
-    this.reset();
-
-  });
-
-}
-
-
-
-/* =========================
-   HACKER TERMINAL
-========================= */
-
-const terminalInput = document.getElementById("terminal-command");
-const terminalOutput = document.getElementById("terminal-output");
-
-
-function runCommand(command) {
-
-  command = command.toLowerCase();
-
-  let response = "";
-
-
-  if (command === "help") {
-
-    response =
-`commands available:
-
-help
-whoami
-skills
-projects
-contact
-scan
-demo
-clear`;
-
-    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
-
-  }
-
-
-  else if (command === "whoami") {
-
-    response = "Delight Mokaya - Ethical Hacker | Founder of Kali Shields";
-
-    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
-
-  }
-
-
-  else if (command === "skills") {
-
-    response = "Python | Penetration Testing | OSINT | Kali Linux | Web Security";
-
-    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
-
-  }
-
-
-  else if (command === "projects") {
-
-    response = "HackTheBox Labs | OSINT Research | Kali Shields";
-
-    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
-
-  }
-
-
-  else if (command === "contact") {
-
-    response = "Email: marydelight72@gmail.com";
-
-    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
-
-  }
-
-
-  else if (command === "clear") {
-
-    terminalOutput.innerHTML = "";
-
-  }
-
-
-  else if (command === "scan") {
-
-    terminalOutput.innerHTML += `> scan target.com<br>`;
-
-    setTimeout(()=>{terminalOutput.innerHTML += "Starting Nmap 7.94...<br>";},500);
-    setTimeout(()=>{terminalOutput.innerHTML += "Scanning target.com (192.168.1.1)<br>";},1200);
-    setTimeout(()=>{terminalOutput.innerHTML += "<br>PORT     STATE SERVICE<br>";},2000);
-    setTimeout(()=>{terminalOutput.innerHTML += "22/tcp   open  ssh<br>";},2500);
-    setTimeout(()=>{terminalOutput.innerHTML += "80/tcp   open  http<br>";},3000);
-    setTimeout(()=>{terminalOutput.innerHTML += "443/tcp  open  https<br>";},3500);
-    setTimeout(()=>{terminalOutput.innerHTML += "<br>Scan completed successfully.<br>";},4200);
-
-  }
-
-
-  else if (command === "demo") {
-
-    terminalOutput.innerHTML += `> demo<br>`;
-
-    const demoLines = [
-
-      "[+] Initializing Kali Shields pentest engine...",
-      "",
-      "$ nmap -sV target.com",
-      "Starting Nmap 7.94...",
-      "Scanning target.com (192.168.1.1)",
-      "",
-      "PORT     STATE SERVICE VERSION",
-      "22/tcp   open  ssh     OpenSSH 8.2",
-      "80/tcp   open  http    Apache 2.4",
-      "443/tcp  open  https   nginx 1.18",
-      "",
-      "$ gobuster dir -u http://target.com -w common.txt",
-      "/admin      (Status: 200)",
-      "/login      (Status: 200)",
-      "/uploads    (Status: 301)",
-      "",
-      "$ sqlmap -u http://target.com/login.php --dbs",
-      "[INFO] testing connection to the target URL",
-      "[INFO] injection point found",
-      "",
-      "available databases:",
-      "[*] users",
-      "[*] credentials",
-      "",
-      "[+] Kali Shields security scan completed",
-      "[!] Vulnerability detected: SQL Injection",
-      "[✔] Recommendation: patch authentication query"
-
-    ];
-
-    let i = 0;
-
-    function runDemo(){
-
-      if(i < demoLines.length){
-
-        terminalOutput.innerHTML += demoLines[i] + "<br>";
-
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
-
-        i++;
-
-        setTimeout(runDemo, 600);
-
-      }
-
-    }
-
-    runDemo();
-
-  }
-
-
-  else {
-
-    terminalOutput.innerHTML += `> ${command}<br>command not found. type 'help'<br>`;
-
-  }
-
-}
-
-
-
-/* =========================
-   TERMINAL INPUT
-========================= */
-
-if (terminalInput) {
-
-  terminalInput.addEventListener("keydown", function (e) {
-
-    if (e.key === "Enter") {
-
-      runCommand(terminalInput.value);
-
-      terminalInput.value = "";
-
-    }
-
-  });
-
-}
-
-
-
-/* =========================
-   AUTO DEMO ON PAGE LOAD
-========================= */
-
-window.addEventListener("load", () => {
-
-  setTimeout(() => {
-
-    runCommand("demo");
-
-  }, 2000);
+document.getElementById("formStatus").innerText="Failed to send message";
 
 });
+
+this.reset();
+
+});
+
+}
+
+
+
+/* =========================
+TERMINAL
+========================= */
+
+const terminalInput=document.getElementById("terminal-command");
+const terminalOutput=document.getElementById("terminal-output");
+
+let commandHistory=[];
+let historyIndex=-1;
+
+
+
+function runCommand(command){
+
+command=command.toLowerCase();
+
+if(command==="help"){
+
+terminalOutput.innerHTML+=`
+> help<br>
+commands:<br>
+whoami<br>
+skills<br>
+projects<br>
+contact<br>
+scan<br>
+demo<br>
+clear<br><br>`;
+
+}
+
+else if(command==="whoami"){
+
+terminalOutput.innerHTML+=`
+> whoami<br>
+Delight Mokaya | Ethical Hacker | Founder of Kali Shields<br><br>`;
+
+}
+
+else if(command==="skills"){
+
+terminalOutput.innerHTML+=`
+> skills<br>
+Python | Penetration Testing | OSINT | Kali Linux<br><br>`;
+
+}
+
+else if(command==="projects"){
+
+terminalOutput.innerHTML+=`
+> projects<br>
+HackTheBox Labs<br>
+OSINT Research<br>
+Kali Shields<br><br>`;
+
+}
+
+else if(command==="contact"){
+
+terminalOutput.innerHTML+=`
+> contact<br>
+Email: marydelight72@gmail.com<br><br>`;
+
+}
+
+else if(command==="clear"){
+
+terminalOutput.innerHTML="";
+
+}
+
+else if(command==="scan"){
+
+terminalOutput.innerHTML+=`> nmap scan target.com<br>`;
+
+setTimeout(()=>{terminalOutput.innerHTML+="Starting Nmap...<br>";},500);
+setTimeout(()=>{terminalOutput.innerHTML+="Scanning target...<br>";},1500);
+setTimeout(()=>{terminalOutput.innerHTML+="22/tcp open ssh<br>";},2200);
+setTimeout(()=>{terminalOutput.innerHTML+="80/tcp open http<br>";},2800);
+setTimeout(()=>{terminalOutput.innerHTML+="443/tcp open https<br>";},3400);
+
+}
+
+else if(command==="demo"){
+
+const lines=[
+
+"$ nmap -sV target.com",
+"PORT STATE SERVICE VERSION",
+"22 open ssh OpenSSH",
+"80 open http Apache",
+"",
+"$ gobuster dir -u http://target.com",
+"/admin (200)",
+"/login (200)",
+"",
+"$ sqlmap -u login.php --dbs",
+"SQL injection detected",
+"",
+"[✔] vulnerability confirmed"
+
+];
+
+let i=0;
+
+function demo(){
+
+if(i<lines.length){
+
+terminalOutput.innerHTML+=lines[i]+"<br>";
+
+terminalOutput.scrollTop=terminalOutput.scrollHeight;
+
+i++;
+
+setTimeout(demo,600);
+
+}
+
+}
+
+demo();
+
+}
+
+else{
+
+terminalOutput.innerHTML+=`
+> ${command}<br>
+command not found<br><br>`;
+
+}
+
+}
+
+
+
+/* =========================
+TERMINAL INPUT
+========================= */
+
+if(terminalInput){
+
+terminalInput.addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+
+runCommand(terminalInput.value);
+
+commandHistory.push(terminalInput.value);
+
+historyIndex=commandHistory.length;
+
+terminalInput.value="";
+
+}
+
+if(e.key==="ArrowUp"){
+
+if(historyIndex>0){
+
+historyIndex--;
+
+terminalInput.value=commandHistory[historyIndex];
+
+}
+
+}
+
+if(e.key==="ArrowDown"){
+
+if(historyIndex<commandHistory.length-1){
+
+historyIndex++;
+
+terminalInput.value=commandHistory[historyIndex];
+
+}else{
+
+terminalInput.value="";
+
+}
+
+}
+
+});
+
+}
