@@ -1,238 +1,324 @@
-/* ========================
-   BODY & BACKGROUND
-   ======================== */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    color: #d1d5db; 
-    font-size: 18px;
-    line-height: 1.6;
+/* =========================
+   MATRIX BACKGROUND
+========================= */
 
-    background-image: url("photo.jpg");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    position: relative;
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "01";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+
+for (let x = 0; x < columns; x++) {
+  drops[x] = 1;
 }
 
-#matrix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2; 
+function drawMatrix() {
+
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#00ff9c";
+  ctx.font = fontSize + "px monospace";
+
+  for (let i = 0; i < drops.length; i++) {
+
+    const text = letters[Math.floor(Math.random() * letters.length)];
+
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+
+    drops[i]++;
+  }
 }
 
-/* Overlay to dull the background */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.55); /* slightly darker for better text readability */
-    z-index: -1;
+setInterval(drawMatrix, 50);
+
+
+
+/* =========================
+   HEADER TYPEWRITER
+========================= */
+
+const text = "Cybersecurity Enthusiast | Ethical Hacker | Founder of Kali Shields";
+
+let index = 0;
+
+function typeWriter() {
+
+  if (index < text.length) {
+
+    document.getElementById("typewriter").innerHTML += text.charAt(index);
+
+    index++;
+
+    setTimeout(typeWriter, 100);
+
+  }
+
 }
 
-/* ========================
-   HEADERS
-   ======================== */
-header {
-    text-align: center;
-    padding: 80px 20px 60px 20px;
+window.addEventListener("load", typeWriter);
+
+
+
+/* =========================
+   SKILL BAR ANIMATION
+========================= */
+
+window.addEventListener("load", () => {
+
+  const percentages = ["90%", "85%"];
+
+  document.querySelectorAll(".skill-fill").forEach((bar, i) => {
+
+    setTimeout(() => {
+
+      bar.style.width = percentages[i];
+
+    }, 500);
+
+  });
+
+});
+
+
+
+/* =========================
+   EMAILJS CONTACT FORM
+========================= */
+
+const contactForm = document.getElementById("contactForm");
+
+if (contactForm) {
+
+  contactForm.addEventListener("submit", function (e) {
+
+    e.preventDefault();
+
+    emailjs.sendForm(
+      "service_bcsqhb2",
+      "jh7exmk",
+      this
+    ).then(function () {
+
+      document.getElementById("formStatus").innerText = "✅ Message sent!";
+
+    }, function () {
+
+      document.getElementById("formStatus").innerText = "❌ Failed to send.";
+
+    });
+
+    this.reset();
+
+  });
+
 }
 
-h1, h2, h3 {
-    color: #38bdf8;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
-    margin-bottom: 15px;
-}
 
-/* ========================
-   NAVIGATION
-   ======================== */
-nav {
-    background: rgba(30, 41, 59, 0.9); 
-    padding: 15px;
-    backdrop-filter: blur(6px);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
 
-nav ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-nav li {
-    margin: 0 15px;
-}
-
-nav a {
-    color: #f5f5dc;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    color: #00ff9c; /* hacker green hover */
-    text-shadow: 0 0 8px #00ff9c;
-}
-
-/* ========================
-   SECTIONS (GLASS STYLE)
-   ======================== */
-section {
-    padding: 40px;
-    max-width: 900px;
-    margin: 40px auto;
-    background: rgba(0, 0, 0, 0.65); 
-    backdrop-filter: blur(12px);
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-}
-
-/* ========================
-   PARAGRAPHS
-   ======================== */
-p {
-    color: #d1d5db; 
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
-    margin-bottom: 15px;
-}
-
-/* ========================
-   PROJECTS & CARDS
-   ======================== */
-.project {
-    background: rgba(30, 41, 59, 0.9);
-    padding: 20px;
-    margin-top: 15px;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-}
-
-/* ========================
-   SKILLS
-   ======================== */
-.skill {
-    margin-bottom: 20px;
-}
-
-.skill-bar {
-    background: rgba(255,255,255,0.2);
-    border-radius: 10px;
-    overflow: hidden;
-    height: 20px;
-}
-
-.skill-fill {
-    background: #00ff9c; /* neon hacker green */
-    height: 100%;
-    width: 0;
-    border-radius: 10px;
-    transition: width 2s ease-in-out;
-}
-
-/* ========================
-   BUTTONS
-   ======================== */
-.fancy-btn {
-    display: inline-block;
-    padding: 15px 40px;
-    background: linear-gradient(45deg,#00c6ff,#0072ff);
-    color: white;
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 20px;
-    transition: 0.3s;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-    margin-top: 20px;
-}
-
-.fancy-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.9);
-}
-
-/* ========================
-   PROFILE IMAGE
-   ======================== */
-.profile-pic {
-    width: 200px;
-    border-radius: 50%;
-    display: block;
-    margin: 20px auto;
-    border: 4px solid #38bdf8;
-}
-
-/* ========================
+/* =========================
    HACKER TERMINAL
-   ======================== */
-.terminal {
-    background: #000;
-    border: 2px solid #00ff9c;
-    padding: 20px;
-    border-radius: 8px;
-    font-family: monospace;
-    box-shadow: 0 5px 15px rgba(0,255,156,0.4);
-}
+========================= */
 
-#terminal-output {
-    min-height: 120px;
-    margin-bottom: 10px;
-    color: #00ff9c;
-    line-height: 1.4;
-    white-space: pre-wrap;
-}
+const terminalInput = document.getElementById("terminal-command");
+const terminalOutput = document.getElementById("terminal-output");
 
-.terminal-input {
-    display: flex;
-    align-items: center;
-}
 
-.terminal-input span {
-    margin-right: 10px;
-    color: #00ff9c;
-}
+function runCommand(command) {
 
-#terminal-command {
-    background: black;
-    border: none;
-    color: #00ff9c;
-    width: 100%;
-    font-family: monospace;
-    outline: none;
-}
+  command = command.toLowerCase();
 
-/* ========================
-   FOOTER
-   ======================== */
-footer {
-    text-align: center;
-    padding: 20px;
-    background: rgba(2, 6, 23, 0.85);
-    margin-top: 40px;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
-}
+  let response = "";
 
-/* ========================
-   RESPONSIVE
-   ======================== */
-@media screen and (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
+
+  if (command === "help") {
+
+    response =
+`commands available:
+
+help
+whoami
+skills
+projects
+contact
+scan
+demo
+clear`;
+
+    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
+
+  }
+
+
+  else if (command === "whoami") {
+
+    response = "Delight Mokaya - Ethical Hacker | Founder of Kali Shields";
+
+    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
+
+  }
+
+
+  else if (command === "skills") {
+
+    response = "Python | Penetration Testing | OSINT | Kali Linux | Web Security";
+
+    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
+
+  }
+
+
+  else if (command === "projects") {
+
+    response = "HackTheBox Labs | OSINT Research | Kali Shields";
+
+    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
+
+  }
+
+
+  else if (command === "contact") {
+
+    response = "Email: marydelight72@gmail.com";
+
+    terminalOutput.innerHTML += `> ${command}<br>${response}<br>`;
+
+  }
+
+
+  else if (command === "clear") {
+
+    terminalOutput.innerHTML = "";
+
+  }
+
+
+  else if (command === "scan") {
+
+    terminalOutput.innerHTML += `> scan target.com<br>`;
+
+    setTimeout(()=>{terminalOutput.innerHTML += "Starting Nmap 7.94...<br>";},500);
+    setTimeout(()=>{terminalOutput.innerHTML += "Scanning target.com (192.168.1.1)<br>";},1200);
+    setTimeout(()=>{terminalOutput.innerHTML += "<br>PORT     STATE SERVICE<br>";},2000);
+    setTimeout(()=>{terminalOutput.innerHTML += "22/tcp   open  ssh<br>";},2500);
+    setTimeout(()=>{terminalOutput.innerHTML += "80/tcp   open  http<br>";},3000);
+    setTimeout(()=>{terminalOutput.innerHTML += "443/tcp  open  https<br>";},3500);
+    setTimeout(()=>{terminalOutput.innerHTML += "<br>Scan completed successfully.<br>";},4200);
+
+  }
+
+
+  else if (command === "demo") {
+
+    terminalOutput.innerHTML += `> demo<br>`;
+
+    const demoLines = [
+
+      "[+] Initializing Kali Shields pentest engine...",
+      "",
+      "$ nmap -sV target.com",
+      "Starting Nmap 7.94...",
+      "Scanning target.com (192.168.1.1)",
+      "",
+      "PORT     STATE SERVICE VERSION",
+      "22/tcp   open  ssh     OpenSSH 8.2",
+      "80/tcp   open  http    Apache 2.4",
+      "443/tcp  open  https   nginx 1.18",
+      "",
+      "$ gobuster dir -u http://target.com -w common.txt",
+      "/admin      (Status: 200)",
+      "/login      (Status: 200)",
+      "/uploads    (Status: 301)",
+      "",
+      "$ sqlmap -u http://target.com/login.php --dbs",
+      "[INFO] testing connection to the target URL",
+      "[INFO] injection point found",
+      "",
+      "available databases:",
+      "[*] users",
+      "[*] credentials",
+      "",
+      "[+] Kali Shields security scan completed",
+      "[!] Vulnerability detected: SQL Injection",
+      "[✔] Recommendation: patch authentication query"
+
+    ];
+
+    let i = 0;
+
+    function runDemo(){
+
+      if(i < demoLines.length){
+
+        terminalOutput.innerHTML += demoLines[i] + "<br>";
+
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+        i++;
+
+        setTimeout(runDemo, 600);
+
+      }
+
     }
-    nav li {
-        margin: 10px 0;
-    }
+
+    runDemo();
+
+  }
+
+
+  else {
+
+    terminalOutput.innerHTML += `> ${command}<br>command not found. type 'help'<br>`;
+
+  }
+
 }
+
+
+
+/* =========================
+   TERMINAL INPUT
+========================= */
+
+if (terminalInput) {
+
+  terminalInput.addEventListener("keydown", function (e) {
+
+    if (e.key === "Enter") {
+
+      runCommand(terminalInput.value);
+
+      terminalInput.value = "";
+
+    }
+
+  });
+
+}
+
+
+
+/* =========================
+   AUTO DEMO ON PAGE LOAD
+========================= */
+
+window.addEventListener("load", () => {
+
+  setTimeout(() => {
+
+    runCommand("demo");
+
+  }, 2000);
+
+});
