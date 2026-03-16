@@ -166,8 +166,8 @@ contactForm.addEventListener("submit",function(e){
 e.preventDefault();
 
 emailjs.sendForm(
-"service_bcsqhb2",
-"jh7exmk",
+"service_hy0w51r",
+"njf1v7p",
 this
 )
 
